@@ -7,12 +7,6 @@ uses System.IOUtils, System.Classes, System.StrUtils, System.SysUtils, System.UI
   {$ENDIF};
 
 const
-  DEF_CONN_SYBASE = 'SIHL_ASA';
-  DEF_CONN_MYSQL = 'SIHL_MYSQL';
-  DEF_CONN_POSTGRE = 'SIHL_PG';
-  DEF_CONN_ODBC = 'SIHL_ODBC';
-  DEF_CONN_SQLITE = 'SIHL_SQLITE';
-  DEF_CONN_FB = 'SISAIHSUS';
 
   ID_SYBASE = 'ASA';
   ID_MYSQL = 'MySQL';
@@ -20,11 +14,8 @@ const
   ID_ODBC = 'ODBC';
   ID_SQLITE = 'SQLite';
   ID_FB = 'FB';
-
-  PASTA_SIHL = 'C:\SIHL\SVC\';
-  PASTA_LOG = PASTA_SIHL+'LOGERROS\';
-  PASTA_DEBUG = PASTA_SIHL+'DEBUG\';
-  PASTA_BDLIBS = PASTA_SIHL+'DRIVER\';
+  ID_MONGO = 'Mongo';
+  ID_MSSQL = 'MSSQL';
 
   NOME_LOG_BD = 'LogBancoDados_%s_%s.log';
   NOME_LOG_SYS = 'LogSistema_%s_%s.log';
@@ -55,9 +46,33 @@ function MySQLDriver : string;
 function FirebirdDriver : string;
 function DriverCliente(Cliente : string) : string;
 function ArquivoCFGManager : String;
+function PASTA_BDLIBS : String;
+function PASTA_LOG : String;
 
 implementation
 uses LogModulo;
+
+function PASTA_LOG : String;
+var
+  NomePasta : string;
+begin
+  NomePasta := PastaExecutavel+'logs';
+  if not DirectoryExists(NomePasta) then
+    TDirectory.CreateDirectory(NomePasta);
+
+  Result := NomePasta + TPath.DirectorySeparatorChar;
+end;
+
+function PASTA_BDLIBS : String;
+var
+  NomePasta : string;
+begin
+  NomePasta := PastaExecutavel+'drivers';
+  if not DirectoryExists(NomePasta) then
+    TDirectory.CreateDirectory(NomePasta);
+
+  Result := NomePasta + TPath.DirectorySeparatorChar;
+end;
 
 function ConcatenarArray(StringArray : TArray<String>; Separador : string = ' - ') : String;
 var

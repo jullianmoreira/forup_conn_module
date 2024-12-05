@@ -11,6 +11,7 @@ uses
   FireDAC.Phys.ODBC, FireDAC.Phys.MySQL, FireDAC.Phys.PG, FireDAC.Phys.ODBCBase, FireDAC.Phys.ASA,
 
   Constantes, FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, FireDAC.Phys.FB, System.IniFiles
+  , FireDAC.Phys.SQLiteWrapper.Stat
   {$IFDEF MSWINDOWS}
     , VCL.Dialogs
   {$ENDIF};
@@ -60,7 +61,6 @@ var
 begin
   try
     PGDriver := PostgreDriver;
-    TLogModulo.SistemaLog.NomeConexao := DEF_CONN_POSTGRE;
     if not FecharAplicacao then
       begin
         if not FileExists(PGDriver) then
@@ -76,7 +76,6 @@ begin
       end;
 
     SMySQLDriver := MySQLDriver;
-    TLogModulo.SistemaLog.NomeConexao := DEF_CONN_MYSQL;
     if not FecharAplicacao then
       begin
         if not FileExists(SMySQLDriver) then
@@ -92,7 +91,6 @@ begin
       end;
 
     SFirebirdDriver := FirebirdDriver;
-    TLogModulo.SistemaLog.NomeConexao := DEF_CONN_FB;
     if not FecharAplicacao then
       begin
         if not FileExists(SFirebirdDriver) then
@@ -142,7 +140,11 @@ begin
       end;
 
     IniLocalCFG := TIniFile.Create(LocalCFG);
-    Self.Default_Database := IniLocalCFG.ReadString('CONFIGURACAO','DEFBD',DEF_CONN_SYBASE);
+    Self.Default_Database := IniLocalCFG.ReadString('CONFIGURACAO','DEFBD',EmptyStr);
+
+    if Self.Default_Database.IsEmpty then
+      raise Exception.Create('Conexão padrão não foi definida no arquivo: "'+LocalCFG+'"');
+
     IntDefMon := IniLocalCFG.ReadInteger('CONFIGURACAO','MONITOR',0);
     case IntDefMon of
       0 : Self.SetDefaultMonitor(mbNone);

@@ -1,50 +1,50 @@
 object ConnManager: TConnManager
-  OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 287
-  Width = 511
+  Height = 359
+  Width = 639
+  PixelsPerInch = 120
   object FDManager: TFDManager
     FormatOptions.AssignedValues = [fvMapRules]
     FormatOptions.OwnMapRules = True
     FormatOptions.MapRules = <>
-    Left = 24
-    Top = 16
+    Left = 30
+    Top = 20
   end
   object WaitCursor: TFDGUIxWaitCursor
     Provider = 'FMX'
-    Left = 24
-    Top = 64
+    Left = 30
+    Top = 80
   end
   object RemoteLog: TFDMoniRemoteClientLink
-    Left = 24
-    Top = 112
+    Left = 30
+    Top = 140
   end
   object FileLog: TFDMoniFlatFileClientLink
-    Left = 24
-    Top = 160
+    Left = 30
+    Top = 200
   end
   object SybaseLink: TFDPhysASADriverLink
-    Left = 400
-    Top = 16
+    Left = 500
+    Top = 20
   end
   object PostgreLink: TFDPhysPgDriverLink
-    Left = 400
-    Top = 64
+    Left = 500
+    Top = 80
   end
   object MySQLLink: TFDPhysMySQLDriverLink
-    Left = 400
-    Top = 112
+    Left = 500
+    Top = 140
   end
   object ODBCLink: TFDPhysODBCDriverLink
-    Left = 400
-    Top = 168
+    Left = 500
+    Top = 210
   end
   object SQLLiteLink: TFDPhysSQLiteDriverLink
-    Left = 400
-    Top = 224
+    Left = 500
+    Top = 280
   end
   object FirebirdLink: TFDPhysFBDriverLink
-    Left = 344
-    Top = 16
+    Left = 430
+    Top = 20
   end
 end
